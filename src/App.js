@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const containers = [
   { id: "KNT-001", location: "Titova 12", zone: "Centar", fill: 94, status: "critical", lastPickup: "2 dana", distance: 12 },
@@ -168,18 +168,21 @@ const css = `
   }
 `;
 
-function useCountUp(target, duration = 1400) {
+function useCountUp(target, duration = 1200) {
   const [val, setVal] = useState(0);
   useEffect(() => {
     let start = 0;
     const step = target / (duration / 16);
     const t = setInterval(() => {
       start += step;
-      if (start >= target) { setVal(target); clearInterval(t); }
+      if (start >= target) { 
+        setVal(target); 
+        clearInterval(t); 
+      }
       else setVal(Math.floor(start));
     }, 16);
     return () => clearInterval(t);
-  }, [target]);
+  }, [target, duration]); // Dodaj 'duration' ovdje
   return val;
 }
 
